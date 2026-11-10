@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Читатели</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); min-height: 100vh; }
+        .custom-card { border-radius: 20px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .table { border-radius: 15px; overflow: hidden; }
+        .table thead { background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%); color: white; }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-dark">👥 Список читателей</h2>
+        <a href="/" class="btn btn-outline-dark rounded-pill px-4">← На главную</a>
+    </div>
+
+    <div class="mb-4">
+        <a href="/readers/new" class="btn btn-primary rounded-pill px-4 shadow">+ Добавить читателя</a>
+    </div>
+
+    <div class="card custom-card">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0 text-center align-middle">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ФИО</th>
+                    <th>Дата рождения</th>
+                    <th>Телефон</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="r : ${readers}">
+                    <td th:text="${r.id}"></td>
+                    <td th:text="${r.fullName}" class="fw-bold"></td>
+                    <td th:text="${r.birthDate}"></td>
+                    <td th:text="${r.phone}"></td>
+                    <td><a th:href="@{/readers/delete/{id}(id=${r.id})}" class="btn btn-sm btn-danger rounded-pill px-3">Удалить</a></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(readers)}"><td colspan="5" class="text-muted py-4">Читателей пока нет.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

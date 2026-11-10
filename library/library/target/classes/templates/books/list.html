@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Книги</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); min-height: 100vh; }
+        .custom-card { border-radius: 20px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .table { border-radius: 15px; overflow: hidden; }
+        .table thead { background: linear-gradient(45deg, #43e97b 0%, #38f9d7 100%); color: white; }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-dark">📚 Каталог книг</h2>
+        <a href="/" class="btn btn-outline-dark rounded-pill px-4">← На главную</a>
+    </div>
+
+    <!-- Кнопка добавления видна ТОЛЬКО АДМИНУ -->
+    <div th:if="${isAdmin}" class="mb-4">
+        <a href="/books/new" class="btn btn-success rounded-pill px-4 shadow">+ Добавить книгу</a>
+    </div>
+
+    <div class="card custom-card">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0 text-center align-middle">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Автор</th>
+                    <th>Страниц</th>
+                    <th>Статус</th>
+                    <!-- Столбец "Действия" виден только админу -->
+                    <th th:if="${isAdmin}">Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="b : ${books}">
+                    <td th:text="${b.id}"></td>
+                    <td th:text="${b.title}" class="fw-bold"></td>
+                    <td th:text="${b.author}"></td>
+                    <td th:text="${b.pages}"></td>
+                    <td>
+                        <span th:if="${b.status == 'Свободна'}" class="badge bg-success px-3 py-2 rounded-pill">Свободна</span>
+                        <span th:if="${b.status == 'Занята'}" class="badge bg-danger px-3 py-2 rounded-pill">Занята</span>
+                        <span th:if="${b.status == null}" class="badge bg-secondary">Неизвестно</span>
+                    </td>
+                    <!-- Кнопка удаления видна только админу -->
+                    <td th:if="${isAdmin}">
+                        <a th:href="@{/books/delete/{id}(id=${b.id})}" class="btn btn-sm btn-danger rounded-pill px-3">Удалить</a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(books)}"><td colspan="6" class="text-muted py-4">Книг пока нет.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

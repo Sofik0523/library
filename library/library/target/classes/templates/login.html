@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход в систему</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; }
+        .login-card { border-radius: 20px; border: none; box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+        .login-header { background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%); border-radius: 20px 20px 0 0; color: white; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card login-card w-25 mx-auto" style="min-width: 350px;">
+        <div class="card-header login-header p-4 text-center">
+            <h3 class="mb-0">Авторизация</h3>
+        </div>
+        <div class="card-body p-5">
+
+            <!-- Вывод ошибки, если пароль неверный -->
+            <div th:if="${error}" class="alert alert-danger text-center" th:text="${error}"></div>
+
+            <form action="/login" method="post">
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Логин:</label>
+                    <input type="text" name="username" class="form-control form-control-lg shadow-sm" placeholder="admin или user" required>
+                </div>
+                <div class="mb-5">
+                    <label class="form-label fw-bold">Пароль:</label>
+                    <input type="password" name="password" class="form-control form-control-lg shadow-sm" placeholder="admin или user" required>
+                </div>
+                <div class="d-grid gap-3">
+                    <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow">Войти</button>
+                    <a href="/" class="btn btn-outline-secondary btn-lg rounded-pill">Назад</a>
+                </div>
+            </form>
+            <hr class="mt-4">
+            <p class="text-muted text-center mb-0">
+                <small><b>Админ:</b> admin / admin<br><b>Читатель:</b> user / user</small>
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная - Библиотека</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .main-card { border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: none; background: rgba(255, 255, 255, 0.95); }
+        .btn-custom { width: 220px; height: 70px; font-size: 20px; font-weight: 600; border-radius: 20px; display: flex; align-items: center; justify-content: center; transition: all 0.4s; border: none; color: white; }
+    </style>
+</head>
+<body>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card main-card p-5 text-center" style="max-width: 800px; width: 100%;">
+
+        <h1 class="display-5 fw-bold text-dark mb-3">Библиотечная Система</h1>
+        <p class="fs-5 text-muted mb-5" th:text="'Вы вошли как: ' + ${role}"></p>
+
+        <div class="d-flex justify-content-center gap-4 flex-wrap mt-4">
+            <!-- Ссылка на книги с передачей роли -->
+            <a th:href="@{/books(role=${role})}" class="btn btn-success btn-custom">📚 Каталог книг</a>
+
+            <!-- Кнопки только для админа (проверка через role) -->
+            <div th:if="${role == 'admin'}" class="d-flex gap-4 flex-wrap">
+                <a href="/readers" class="btn btn-primary btn-custom">👥 Читатели</a>
+                <a href="/loans" class="btn btn-warning btn-custom">📋 Выдачи</a>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <a href="/" class="btn btn-outline-secondary">Выйти</a>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
